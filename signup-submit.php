@@ -26,60 +26,53 @@
             $seek2 = ($_POST["seeking2"]<0 || $_POST["seeking2"]>99);
             $seekl = ($_POST["seeking"] > $_POST["seeking2"]);
 
+            $failed = false;
+
             if(empty($_POST["name"])){
-                header("Location:error.php");
+                $failed = call_error("Please enter the name");
             }
             if(check_name($_POST["name"]))
             {
-                header("Location:error.php");
+                $failed = call_error("User name already exists, please enter another name");
             }
             if($_POST["age"]<0 || $_POST["age"]>99){
-                header("Location:error.php");
+                $failed = call_error("Please enter a valid date");
             }
             if(!($_POST["gender"]=="M" || $_POST["gender"]=="F")){
-                header("Location:error.php");
+                $failed = call_error("Please select the gender");
             }
             if($p11 or $p22 or $p33 or $p44){
-                header("Location:error.php");
+                $failed = call_error("Please enter a valid personlaity type");
             }
-            if(!($_POST["os"] == "Windows" or $_POST["os"] == "MAC OS X" or $_POST == "Linux"))
-            {
-                header("Location:error.php");
+            if(!($_POST["os"] == "Windows" or $_POST["os"] == "MAC OS X" or $_POST["os"] == "Linux")){
+                $failed = call_error("Please select a valid OS");
             }
-            if($seek or $seek2 or $seekl)
-            {
-                header("Location:error.php");
+            if($seek or $seek2 or $seekl){
+                $failed = call_error("Please enter a valid seeking age");
             }
-            
-            if(!isset($_POST["male"]) and !isset($_POST["female"]))
-            {
-                header("Location:error.php");
+            if(!isset($_POST["male"]) and !isset($_POST["female"])){
+                $failed = call_error("Please select atleast one seekign gender");
             }
+            if(!$failed){
+                $gender = "";
+                if(isset($_POST["male"]) and $_POST["male"] == "on"){
+                    $gender = $gender."M";
+                }
+                if(isset($_POST["female"]) and $_POST["female"] == "on"){
+                        $gender = $gender."F";
+                    }
 
+                    $userData = $_POST["name"]
+                        .",".$_POST["gender"]
+                        .",".$_POST["age"]
+                        .",".$_POST["personality"]
+                        .",".$_POST["os"]
+                        .",".$_POST["seeking"]
+                        .",".$_POST["seeking2"]
+                        .",".$gender;
 
-
-       
-       else
-       {
-           $gender = "";
-           if(isset($_POST["male"]) and $_POST["male"] == "on"){
-               $gender = $gender."M";
-           }
-           if(isset($_POST["female"]) and $_POST["female"] == "on"){
-                $gender = $gender."F";
+                    file_put_contents("singles.txt", $userData."\n", FILE_APPEND);
             }
-
-            $userData = $_POST["name"]
-                .",".$_POST["gender"]
-                .",".$_POST["age"]
-                .",".$_POST["personality"]
-                .",".$_POST["os"]
-                .",".$_POST["seeking"]
-                .",".$_POST["seeking2"]
-                .",".$gender;
-
-            file_put_contents("singles.txt", $userData."\n", FILE_APPEND);
-       }
         ?>
 
          <div>

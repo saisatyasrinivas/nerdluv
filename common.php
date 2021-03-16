@@ -34,7 +34,7 @@
         $matchdata = array();
         foreach($individual as $subindividual){
             $almostdone = explode(",", $subindividual);
-            if($individualdata[0] == $almostdone[0]){
+            if($individualdata[0] == $almostdone[0] or count($almostdone) != 8){
                 continue;
             }
             // conditions
@@ -54,7 +54,7 @@
     function personalitycheck($stringmatch1, $stringmatch2){
         $count = 0;
         while($count < 4){
-            if($stringmatch1[$count] == $stringmatch2[$count]){
+            if(substr($stringmatch1,$count,1) == substr($stringmatch2,$count,1)){
                 return true;
             }
             $count++;
@@ -73,6 +73,11 @@
             <li><strong>OS:</strong>" . $nerddata[4] . "</li>                        
         </ul>
         </div>";
+    }
+
+    function call_error($message){
+        header("Location:error.php?error=".rawurlencode($message));
+        return true;
     }
 
 ?>

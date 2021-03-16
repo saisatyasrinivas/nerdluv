@@ -26,7 +26,7 @@
                 Favorite OS: 
                 <select name="os">
                     <option>Windows</option>
-                    <option>MAC OS X</option>
+                    <option>Mac OS X</option>
                     <option>Linux</option>
                 </select><br/><br/>
                 Seeking age: 

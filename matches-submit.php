@@ -14,16 +14,17 @@
             <?php
                 include './common.php';
                 $matchusername = $_GET["name"];
+                $failed = false;
                 if(empty($matchusername)){
-                    header("Location:error.php");
+                    $failed = call_error("Please enter the username");
                 }
                 if(!(check_name($matchusername))){
-                    header("Location:error.php");
+                    $failed = call_error("Username is invalid");
                 }
-                if(isset($_SESSION["finalhtml"])){
-                    echo $_SESSION["finalhtml"];
+                if(isset($_SESSION["USERNAME"]) and $_SESSION["USERNAME"] ==  $_GET["name"] and isset($_SESSION["{$_GET["name"]}finalhtml"])){
+                    echo $_SESSION["{$_GET["name"]}finalhtml"];
                 }
-                else{
+                if(!$failed){
                     // Get username from matches.php
                     // match if the user exists in singles.txt and retrieve the data
                     //match with qualites (Opp gender, age, os, personality)
